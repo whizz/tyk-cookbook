@@ -1,8 +1,6 @@
 packagecloud_repo 'tyk/tyk-gateway'
 
-package 'tyk-gateway' do
-  version node['tyk']['gateway']['version']
-end
+package 'tyk-gateway'
 
 template '/opt/tyk-gateway/tyk.conf' do
   source 'tyk.conf.erb'
