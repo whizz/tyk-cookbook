@@ -1,5 +1,9 @@
-# Gateway configuration
+# Gateway
 default['tyk']['gateway']['install_path'] = '/opt/tyk-gateway'
+
+# Gateway configuration
+# The configuration file is generated from node['tyk']['gateway']['config']
+# For documentation see https://tyk.io/v1.9/configuration/configuration/
 default['tyk']['gateway']['config']['listen_port'] = 8080
 default['tyk']['gateway']['config']['secret'] = "Y0uSh0u1dR3a11yChang3Th1sS3cr3t"
 default['tyk']['gateway']['config']['template_path'] = "#{node['tyk']['gateway']['install_path']}/templates"
@@ -30,51 +34,44 @@ default['tyk']['gateway']['config']['policies']['policy_record_name'] = "tyk_pol
 default['tyk']['gateway']['config']['hash_keys'] = true
 default['tyk']['gateway']['config']['suppress_redis_signal_reload'] = false
 
+# Dashboard
+default['tyk']['dashboard']['install_path'] = '/opt/tyk-dashboard'
+  
 # Dashboard configuration  
-default['tyk']['dashboard']['config'] = {
-  :listen_port => 3000,
-  :tyk_api_config => {
-      :Host => "http://localhost",
-      :Port => "#{node['tyk']['gateway']['config']['listen_port']}",
-      :Secret => node['tyk']['gateway']['config']['secret']
-    },
-  :mongo_url => node['tyk']['gateway']['config']['analytics_config']['mongo_url'],
-  :page_size => 10,
-  :admin_secret => "12345",
-  :redis_port => 6379,
-  :redis_host => "localhost",
-  :redis_password => "",
-  :force_api_defaults => false,
-  :notify_on_change => true,
-  :license_owner => "Your Name",
-  :hash_keys => true,
-  :email_backend => {},
-  :hide_listen_path => false,
-  :use_sentry => false,
-  :sentry_code => "",
-  :sentry_js_code => "",
-  :show_org_id => true,
-  :enable_duplicate_slugs => true,
-  :host_config => {
-      :override_hostname => node['fqdn'],
-      :disable_org_slug_prefix => true,
-      :enable_host_names => false,
-      :hostname => node['fqdn'],
-      :portal_domains => {},
-      :portal_root_path => "/portal"
-    },
-  :http_server_options => {
-      :use_ssl => false,
-      :certificates => [
-            {}
-        ]
-    },
-  :ui => {
-      :login_page => {},
-      :nav => {},
-      :uptime => {},
-      :portal => {},
-      :designer => {}
-    },
-  :home_dir => "/opt/tyk-dashboard"
-}
+# The configuration file is generated from node['tyk']['dashboard']['config']
+# For documentation see https://tyk.io/v1.9/configuration/dashboard-config/
+default['tyk']['dashboard']['config']['listen_port'] = 3000
+default['tyk']['dashboard']['config']['tyk_api_config']['Host'] = "http://localhost"
+default['tyk']['dashboard']['config']['tyk_api_config']['Port'] = "#{node['tyk']['gateway']['config']['listen_port']}"
+default['tyk']['dashboard']['config']['tyk_api_config']['Secret'] = node['tyk']['gateway']['config']['secret']
+default['tyk']['dashboard']['config']['mongo_url'] = node['tyk']['gateway']['config']['analytics_config']['mongo_url']
+default['tyk']['dashboard']['config']['page_size'] = 10
+default['tyk']['dashboard']['config']['admin_secret'] = "12345"
+default['tyk']['dashboard']['config']['redis_port'] = 6379
+default['tyk']['dashboard']['config']['redis_host'] = "localhost"
+default['tyk']['dashboard']['config']['redis_password'] = ""
+default['tyk']['dashboard']['config']['force_api_defaults'] = false
+default['tyk']['dashboard']['config']['notify_on_change'] = true
+default['tyk']['dashboard']['config']['license_owner'] = "Your Name"
+default['tyk']['dashboard']['config']['hash_keys'] = true
+default['tyk']['dashboard']['config']['email_backend'] = {}
+default['tyk']['dashboard']['config']['hide_listen_path'] = false
+default['tyk']['dashboard']['config']['use_sentry'] = false
+default['tyk']['dashboard']['config']['sentry_code'] = ""
+default['tyk']['dashboard']['config']['sentry_js_code'] = ""
+default['tyk']['dashboard']['config']['show_org_id'] = true
+default['tyk']['dashboard']['config']['enable_duplicate_slugs'] = true
+default['tyk']['dashboard']['config']['host_config']['override_hostname'] = node['fqdn']
+default['tyk']['dashboard']['config']['host_config']['disable_org_slug_prefix'] = true
+default['tyk']['dashboard']['config']['host_config']['enable_host_names'] = false
+default['tyk']['dashboard']['config']['host_config']['hostname'] = node['fqdn']
+default['tyk']['dashboard']['config']['host_config']['portal_domains'] = {}
+default['tyk']['dashboard']['config']['host_config']['portal_root_path'] = "/portal"
+default['tyk']['dashboard']['config']['http_server_options']['use_ssl'] = false,
+default['tyk']['dashboard']['config']['http_server_options']['certificates'] = [ {} ]
+default['tyk']['dashboard']['config']['ui']['login_page'] = {},
+default['tyk']['dashboard']['config']['ui']['nav'] = {},
+default['tyk']['dashboard']['config']['ui']['uptime'] = {},
+default['tyk']['dashboard']['config']['ui']['portal'] = {},
+default['tyk']['dashboard']['config']['ui']['designer'] = {}
+default['tyk']['dashboard']['config']['home_dir'] = node['tyk']['dashboard']['install_path']
