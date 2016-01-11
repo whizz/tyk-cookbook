@@ -7,9 +7,10 @@ template '/opt/tyk-gateway/tyk.conf' do
   variables( 
     :config => node['tyk']['gateway']['config']
   )
-  notifies :reload, "service[tyk-gateway]"
+  notifies :restart, "service[tyk-gateway]"
 end
 
 service 'tyk-gateway' do
   action [:enable, :start]
+  supports restart: true, reload: false, status: true
 end

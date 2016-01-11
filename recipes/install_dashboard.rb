@@ -7,9 +7,10 @@ template '/opt/tyk-dashboard/tyk_analytics.conf' do
   variables( 
     :config => node['tyk']['dashboard']['config']
   )
-  notifies :reload, "service[tyk-dashboard]"
+  notifies :restart, "service[tyk-dashboard]"
 end
 
 service 'tyk-dashboard' do
   action [:enable, :start]
+  supports restart: true, reload: false, status: true
 end
