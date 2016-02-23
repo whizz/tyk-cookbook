@@ -1,10 +1,11 @@
 name             'tyk'
 maintainer       'Michal Taborsky'
-maintainer_email 'michal@taborsky.cz'
+maintainer_email 'michal.taborsky@mall.cz'
 license          'Apache 2.0'
 description      'Installs/Configures tyk'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.1.2'
+version          '0.1.3'
+source_url       'https://gitlab.com/nrh/tyk-cookbook'
 
 %w[ debian ubuntu centos redhat fedora scientific oracle ].each do |os|
   supports os
