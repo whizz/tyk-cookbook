@@ -94,3 +94,25 @@ default['tyk']['dashboard']['config']['ui']['portal'] = {}
 default['tyk']['dashboard']['config']['ui']['designer'] = {}
 default['tyk']['dashboard']['config']['home_dir'] = node['tyk']['dashboard']['install_path']
 default['tyk']['dashboard']['config']['identity_broker']['enabled'] = false
+
+# Pump
+default['tyk']['pump']['install_path'] = '/opt/tyk-pump'
+
+# Pump configuration
+# The configuration file is generated from node['tyk']['pump']['config']
+# For documentation see https://tyk.io/docs/tyk-pump/configuration/
+default['tyk']['pump']['config']['analytics_storage_type'] = "redis"
+default['tyk']['pump']['config']['analytics_storage_config']['type'] = "redis"
+default['tyk']['pump']['config']['analytics_storage_config']['host'] = "localhost"
+default['tyk']['pump']['config']['analytics_storage_config']['port'] = 6379
+default['tyk']['pump']['config']['analytics_storage_config']['hosts'] = nil
+default['tyk']['pump']['config']['analytics_storage_config']['username'] = ""
+default['tyk']['pump']['config']['analytics_storage_config']['password'] = ""
+default['tyk']['pump']['config']['analytics_storage_config']['database'] = 0
+default['tyk']['pump']['config']['analytics_storage_config']['optimisation_max_idle'] = 100
+default['tyk']['pump']['config']['analytics_storage_config']['optimisation_max_active'] = 0
+default['tyk']['pump']['config']['analytics_storage_config']['enable_cluster'] = false
+default['tyk']['pump']['config']['purge_delay'] = 10
+default['tyk']['pump']['config']['uptime_pump_config']['collection_name'] = 'tyk_uptime_analytics'
+default['tyk']['pump']['config']['uptime_pump_config']['mongo_url'] = 'mongodb://localhost/tyk_analytics'
+default['tyk']['pump']['config']['dont_purge_uptime_data'] = false
