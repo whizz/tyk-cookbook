@@ -3,12 +3,12 @@ default['tyk']['gateway']['install_path'] = '/opt/tyk-gateway'
 
 # Gateway configuration
 # The configuration file is generated from node['tyk']['gateway']['config']
-# For documentation see https://tyk.io/v1.9/configuration/configuration/
+# For documentation see https://tyk.io/docs/tyk-api-gateway-v-2-0/configuration/gateway-configuration-options/
 default['tyk']['gateway']['config']['listen_port'] = 8080
 default['tyk']['gateway']['config']['secret'] = "Y0uSh0u1dR3a11yChang3Th1sS3cr3t"
 default['tyk']['gateway']['config']['template_path'] = "#{node['tyk']['gateway']['install_path']}/templates"
 default['tyk']['gateway']['config']['tyk_js_path'] = "#{node['tyk']['gateway']['install_path']}/js/tyk.js"
-default['tyk']['gateway']['config']['use_db_app_configs'] = true
+default['tyk']['gateway']['config']['use_db_app_configs'] = false
 default['tyk']['gateway']['config']['app_path'] = "#{node['tyk']['gateway']['install_path']}/apps"
 default['tyk']['gateway']['config']['middleware_path'] = "#{node['tyk']['gateway']['install_path']}/middleware"
 default['tyk']['gateway']['config']['storage']
@@ -19,32 +19,50 @@ default['tyk']['gateway']['config']['storage']['username'] = ""
 default['tyk']['gateway']['config']['storage']['password'] = ""
 default['tyk']['gateway']['config']['storage']['database'] = 0
 default['tyk']['gateway']['config']['storage']['optimisation_max_idle'] = 500
-default['tyk']['gateway']['config']['enable_analytics'] = true
-default['tyk']['gateway']['config']['analytics_config']['type'] = "mongo"
-default['tyk']['gateway']['config']['analytics_config']['mongo_url'] = "mongodb://127.0.0.1:27017/tyk_analytics"
-default['tyk']['gateway']['config']['analytics_config']['mongo_collection'] = "tyk_analytics"
-default['tyk']['gateway']['config']['analytics_config']['purge_delay'] = 5
+default['tyk']['gateway']['config']['storage']['optimisation_max_active'] = 800
+default['tyk']['gateway']['config']['enable_analytics'] = false
+default['tyk']['gateway']['config']['analytics_config']['type'] = "csv"
+default['tyk']['gateway']['config']['analytics_config']['csv_dir'] = "/tmp"
+default['tyk']['gateway']['config']['analytics_config']['mongo_url'] = ""
+default['tyk']['gateway']['config']['analytics_config']['mongo_collection'] = ""
+default['tyk']['gateway']['config']['analytics_config']['purge_delay'] = -1
 default['tyk']['gateway']['config']['analytics_config']['ignored_ips'] = []
+default['tyk']['gateway']['config']['health_check']
 default['tyk']['gateway']['config']['health_check']['enable_health_checks'] = true
 default['tyk']['gateway']['config']['health_check']['health_check_value_timeouts'] = 60
 default['tyk']['gateway']['config']['optimisations_use_async_session_write'] = true
 default['tyk']['gateway']['config']['allow_master_keys'] = false
-default['tyk']['gateway']['config']['policies']['policy_source'] = "mongo"
-default['tyk']['gateway']['config']['policies']['policy_record_name'] = "tyk_policies"
+default['tyk']['gateway']['config']['policies']
+default['tyk']['gateway']['config']['policies']['policy_source'] = "file"
+default['tyk']['gateway']['config']['policies']['policy_record_name'] = "policies"
 default['tyk']['gateway']['config']['hash_keys'] = true
 default['tyk']['gateway']['config']['suppress_redis_signal_reload'] = false
+default['tyk']['gateway']['config']['close_connections'] = true
+default['tyk']['gateway']['config']['local_session_cache']
+default['tyk']['gateway']['config']['local_session_cache']['disable_cached_session_state'] = true
+default['tyk']['gateway']['config']['uptime_tests']
+default['tyk']['gateway']['config']['uptime_tests']['disable'] = false
+default['tyk']['gateway']['config']['uptime_tests']['config']
+default['tyk']['gateway']['config']['uptime_tests']['config']['enable_uptime_analytics'] = false
+default['tyk']['gateway']['config']['uptime_tests']['config']['failure_trigger_sample_size'] = 3
+default['tyk']['gateway']['config']['uptime_tests']['config']['time_wait'] = 300
+default['tyk']['gateway']['config']['uptime_tests']['config']['checker_pool_size'] = 50
+default['tyk']['gateway']['config']['hostname'] = "tyk.local"
+default['tyk']['gateway']['config']['enable_custom_domains'] = true
+default['tyk']['gateway']['config']['enable_jsvm'] = true
 
 # Dashboard
 default['tyk']['dashboard']['install_path'] = '/opt/tyk-dashboard'
-  
-# Dashboard configuration  
+
+# Dashboard configuration
 # The configuration file is generated from node['tyk']['dashboard']['config']
-# For documentation see https://tyk.io/v1.9/configuration/dashboard-config/
+# For documentation see https://tyk.io/docs/tyk-dashboard-v1-0/configuration/
 default['tyk']['dashboard']['config']['listen_port'] = 3000
-default['tyk']['dashboard']['config']['tyk_api_config']['Host'] = "http://localhost"
-default['tyk']['dashboard']['config']['tyk_api_config']['Port'] = "#{node['tyk']['gateway']['config']['listen_port']}"
+default['tyk']['dashboard']['config']['tyk_api_config']['Host'] = "localhost"
+default['tyk']['dashboard']['config']['tyk_api_config']['Port'] = #{node['tyk']['gateway']['config']['listen_port']}
 default['tyk']['dashboard']['config']['tyk_api_config']['Secret'] = node['tyk']['gateway']['config']['secret']
 default['tyk']['dashboard']['config']['mongo_url'] = node['tyk']['gateway']['config']['analytics_config']['mongo_url']
+default['tyk']['dashboard']['config']['shared_node_secret'] = node['tyk']['gateway']['config']['secret']
 default['tyk']['dashboard']['config']['page_size'] = 10
 default['tyk']['dashboard']['config']['admin_secret'] = "12345"
 default['tyk']['dashboard']['config']['redis_port'] = 6379
@@ -75,3 +93,4 @@ default['tyk']['dashboard']['config']['ui']['uptime'] = {}
 default['tyk']['dashboard']['config']['ui']['portal'] = {}
 default['tyk']['dashboard']['config']['ui']['designer'] = {}
 default['tyk']['dashboard']['config']['home_dir'] = node['tyk']['dashboard']['install_path']
+default['tyk']['dashboard']['config']['identity_broker']['enabled'] = false
