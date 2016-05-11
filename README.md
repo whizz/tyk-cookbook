@@ -6,14 +6,16 @@ Install and configure Tyk API gateway (https://tyk.io)
 ## Usage
 
 - For a testing installation, just add the `tyk::default` recipe to your 
-runlist. It will install Redis, Mongo, Tyk Gateway and Tyk Dashboard on the
-node. You have to bootstrap the dashboard with an initial user, as per manual.
+runlist. It will install Redis, Mongo, Tyk Gateway, Tyk Dashboard and Tyk Pump
+on the node. You have to bootstrap the dashboard with an initial user, as per
+manual.
 After that, point your browser to your node port 3000 and the dashboard
 should come up and let you login with the user you created during the
 bootstrap.
-- For production, use the provided `install_gateway` and `install_dashboard`
-recipes. You will want to change the configuration attributes. Best solution
-is to create your own wrapper cookbook, where you set the `default` attributes.
+- For production, use the provided `install_gateway`, `install_dashboard` and
+`install_pump` recipes. You will want to change the configuration attributes.
+Best solution is to create your own wrapper cookbook, where you set the
+`default` attributes.
 
 ## Contributing
 
