@@ -59,7 +59,7 @@ default['tyk']['dashboard']['install_path'] = '/opt/tyk-dashboard'
 # For documentation see https://tyk.io/docs/tyk-dashboard-v1-0/configuration/
 default['tyk']['dashboard']['config']['listen_port'] = 3000
 default['tyk']['dashboard']['config']['tyk_api_config']['Host'] = "localhost"
-default['tyk']['dashboard']['config']['tyk_api_config']['Port'] = #{node['tyk']['gateway']['config']['listen_port']}
+default['tyk']['dashboard']['config']['tyk_api_config']['Port'] = "#{node['tyk']['gateway']['config']['listen_port']}"
 default['tyk']['dashboard']['config']['tyk_api_config']['Secret'] = node['tyk']['gateway']['config']['secret']
 default['tyk']['dashboard']['config']['mongo_url'] = node['tyk']['gateway']['config']['analytics_config']['mongo_url']
 default['tyk']['dashboard']['config']['shared_node_secret'] = node['tyk']['gateway']['config']['secret']
