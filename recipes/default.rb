@@ -9,4 +9,5 @@ include_recipe 'redisio::enable'
 include_recipe 'mongodb'
 include_recipe 'tyk::install_gateway'
 include_recipe 'tyk::install_dashboard'
+include_recipe 'tyk::install_pump'
 
