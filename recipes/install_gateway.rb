@@ -4,10 +4,10 @@ package 'tyk-gateway'
 
 template '/opt/tyk-gateway/tyk.conf' do
   source 'tyk.conf.erb'
-  variables( 
-    :config => node['tyk']['gateway']['config']
+  variables(
+    config: node['tyk']['gateway']['config']
   )
-  notifies :restart, "service[tyk-gateway]"
+  notifies :restart, 'service[tyk-gateway]'
 end
 
 service 'tyk-gateway' do

@@ -4,10 +4,10 @@ package 'tyk-dashboard'
 
 template '/opt/tyk-dashboard/tyk_analytics.conf' do
   source 'tyk.conf.erb'
-  variables( 
-    :config => node['tyk']['dashboard']['config']
+  variables(
+    config: node['tyk']['dashboard']['config']
   )
-  notifies :restart, "service[tyk-dashboard]"
+  notifies :restart, 'service[tyk-dashboard]'
 end
 
 service 'tyk-dashboard' do

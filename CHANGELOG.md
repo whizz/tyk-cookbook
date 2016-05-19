@@ -3,6 +3,13 @@ tyk CHANGELOG
 
 This file is used to list changes made in each version of the tyk cookbook.
 
+0.2.1 (2016-05-19)
+------------------
+- Tyk 2 config enhacements (Thanks to Gaelan D'costa)
+- Make Foodcritic pass
+
+
+
 0.2.0 (2016-05-12)
 ------------------
 - Add rake tests, Rubocop tests currently fail

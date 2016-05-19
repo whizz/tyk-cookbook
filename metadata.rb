@@ -8,7 +8,7 @@ version          '0.2.1'
 source_url       'https://gitlab.com/nrh/tyk-cookbook'
 issues_url       'https://gitlab.com/nrh/tyk-cookbook/issues'
 
-%w[ debian ubuntu centos redhat fedora scientific oracle ].each do |os|
+%w( debian ubuntu centos redhat fedora scientific oracle ).each do |os|
   supports os
 end
 
