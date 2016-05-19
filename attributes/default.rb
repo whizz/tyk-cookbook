@@ -6,7 +6,7 @@ default['tyk']['gateway']['install_path'] = '/opt/tyk-gateway'
 # For documentation see https://tyk.io/docs/tyk-api-gateway-v-2-0/configuration/gateway-configuration-options/
 default['tyk']['gateway']['config']['listen_port'] = 8080
 default['tyk']['gateway']['config']['secret'] = "Y0uSh0u1dR3a11yChang3Th1sS3cr3t"
-default['tyk']['gateway']['config']['node_secret'] = "#{node['tyk']['gateway']['config']['secret']}"
+default['tyk']['gateway']['config']['node_secret'] = node['tyk']['gateway']['config']['secret']
 default['tyk']['gateway']['config']['template_path'] = "#{node['tyk']['gateway']['install_path']}/templates"
 default['tyk']['gateway']['config']['tyk_js_path'] = "#{node['tyk']['gateway']['install_path']}/js/tyk.js"
 default['tyk']['gateway']['config']['use_db_app_configs'] = false
