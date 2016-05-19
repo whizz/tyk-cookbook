@@ -6,6 +6,7 @@ default['tyk']['gateway']['install_path'] = '/opt/tyk-gateway'
 # For documentation see https://tyk.io/docs/tyk-api-gateway-v-2-0/configuration/gateway-configuration-options/
 default['tyk']['gateway']['config']['listen_port'] = 8080
 default['tyk']['gateway']['config']['secret'] = "Y0uSh0u1dR3a11yChang3Th1sS3cr3t"
+default['tyk']['gateway']['config']['node_secret'] = "#{node['tyk']['gateway']['config']['secret']}"
 default['tyk']['gateway']['config']['template_path'] = "#{node['tyk']['gateway']['install_path']}/templates"
 default['tyk']['gateway']['config']['tyk_js_path'] = "#{node['tyk']['gateway']['install_path']}/js/tyk.js"
 default['tyk']['gateway']['config']['use_db_app_configs'] = false
@@ -21,11 +22,8 @@ default['tyk']['gateway']['config']['storage']['database'] = 0
 default['tyk']['gateway']['config']['storage']['optimisation_max_idle'] = 500
 default['tyk']['gateway']['config']['storage']['optimisation_max_active'] = 800
 default['tyk']['gateway']['config']['enable_analytics'] = false
-default['tyk']['gateway']['config']['analytics_config']['type'] = "csv"
-default['tyk']['gateway']['config']['analytics_config']['csv_dir'] = "/tmp"
-default['tyk']['gateway']['config']['analytics_config']['mongo_url'] = ""
-default['tyk']['gateway']['config']['analytics_config']['mongo_collection'] = ""
-default['tyk']['gateway']['config']['analytics_config']['purge_delay'] = -1
+default['tyk']['gateway']['config']['enable_detailed_recording'] = false
+default['tyk']['gateway']['config']['enable_geo_ip'] = false
 default['tyk']['gateway']['config']['analytics_config']['ignored_ips'] = []
 default['tyk']['gateway']['config']['health_check']
 default['tyk']['gateway']['config']['health_check']['enable_health_checks'] = true
@@ -58,20 +56,21 @@ default['tyk']['dashboard']['install_path'] = '/opt/tyk-dashboard'
 # The configuration file is generated from node['tyk']['dashboard']['config']
 # For documentation see https://tyk.io/docs/tyk-dashboard-v1-0/configuration/
 default['tyk']['dashboard']['config']['listen_port'] = 3000
-default['tyk']['dashboard']['config']['tyk_api_config']['Host'] = "localhost"
-default['tyk']['dashboard']['config']['tyk_api_config']['Port'] = "#{node['tyk']['gateway']['config']['listen_port']}"
+default['tyk']['dashboard']['config']['tyk_api_config']['Host'] = "http://localhost"
+default['tyk']['dashboard']['config']['tyk_api_config']['Port'] = node['tyk']['gateway']['config']['listen_port'].to_s
 default['tyk']['dashboard']['config']['tyk_api_config']['Secret'] = node['tyk']['gateway']['config']['secret']
-default['tyk']['dashboard']['config']['mongo_url'] = node['tyk']['gateway']['config']['analytics_config']['mongo_url']
-default['tyk']['dashboard']['config']['shared_node_secret'] = node['tyk']['gateway']['config']['secret']
+default['tyk']['dashboard']['config']['mongo_url'] = 'mongodb://127.0.0.1/tyk_analytics'
+default['tyk']['dashboard']['config']['shared_node_secret'] = node['tyk']['gateway']['config']['node_secret']
 default['tyk']['dashboard']['config']['page_size'] = 10
 default['tyk']['dashboard']['config']['admin_secret'] = "12345"
-default['tyk']['dashboard']['config']['redis_port'] = 6379
-default['tyk']['dashboard']['config']['redis_host'] = "localhost"
-default['tyk']['dashboard']['config']['redis_password'] = ""
+default['tyk']['dashboard']['config']['redis_port'] = node['tyk']['gateway']['config']['storage']['port'] 
+default['tyk']['dashboard']['config']['redis_host'] = node['tyk']['gateway']['config']['storage']['host']
+default['tyk']['dashboard']['config']['redis_database'] = node['tyk']['gateway']['config']['storage']['database']
+default['tyk']['dashboard']['config']['redis_password'] = node['tyk']['gateway']['config']['storage']['password']
 default['tyk']['dashboard']['config']['force_api_defaults'] = false
 default['tyk']['dashboard']['config']['notify_on_change'] = true
 default['tyk']['dashboard']['config']['license_owner'] = "Your Name"
-default['tyk']['dashboard']['config']['hash_keys'] = true
+default['tyk']['dashboard']['config']['hash_keys'] = node['tyk']['gateway']['config']['hash_keys'] 
 default['tyk']['dashboard']['config']['email_backend'] = {}
 default['tyk']['dashboard']['config']['hide_listen_path'] = false
 default['tyk']['dashboard']['config']['use_sentry'] = false
@@ -103,16 +102,20 @@ default['tyk']['pump']['install_path'] = '/opt/tyk-pump'
 # For documentation see https://tyk.io/docs/tyk-pump/configuration/
 default['tyk']['pump']['config']['analytics_storage_type'] = "redis"
 default['tyk']['pump']['config']['analytics_storage_config']['type'] = "redis"
-default['tyk']['pump']['config']['analytics_storage_config']['host'] = "localhost"
-default['tyk']['pump']['config']['analytics_storage_config']['port'] = 6379
+default['tyk']['pump']['config']['analytics_storage_config']['host'] = node['tyk']['gateway']['config']['storage']['host']
+
+default['tyk']['pump']['config']['analytics_storage_config']['port'] = node['tyk']['gateway']['config']['storage']['port']
+
 default['tyk']['pump']['config']['analytics_storage_config']['hosts'] = nil
-default['tyk']['pump']['config']['analytics_storage_config']['username'] = ""
-default['tyk']['pump']['config']['analytics_storage_config']['password'] = ""
-default['tyk']['pump']['config']['analytics_storage_config']['database'] = 0
+default['tyk']['pump']['config']['analytics_storage_config']['username'] = node['tyk']['gateway']['config']['storage']['username']
+default['tyk']['pump']['config']['analytics_storage_config']['password'] = node['tyk']['gateway']['config']['storage']['password']
+
+default['tyk']['pump']['config']['analytics_storage_config']['database'] = node['tyk']['gateway']['config']['storage']['database']
+
 default['tyk']['pump']['config']['analytics_storage_config']['optimisation_max_idle'] = 100
 default['tyk']['pump']['config']['analytics_storage_config']['optimisation_max_active'] = 0
 default['tyk']['pump']['config']['analytics_storage_config']['enable_cluster'] = false
 default['tyk']['pump']['config']['purge_delay'] = 10
 default['tyk']['pump']['config']['uptime_pump_config']['collection_name'] = 'tyk_uptime_analytics'
-default['tyk']['pump']['config']['uptime_pump_config']['mongo_url'] = 'mongodb://localhost/tyk_analytics'
+default['tyk']['pump']['config']['uptime_pump_config']['mongo_url'] = node['tyk']['dashboard']['config']['mongo_url']
 default['tyk']['pump']['config']['dont_purge_uptime_data'] = false
