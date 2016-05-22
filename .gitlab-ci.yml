@@ -6,6 +6,6 @@ before_script:
 
 test:
   script:
-    - bundle exec rake test:quick
+    - bundle exec rake test:quick --trace
   tags:
     - ruby
