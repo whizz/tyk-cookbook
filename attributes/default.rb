@@ -22,8 +22,8 @@ default['tyk']['gateway']['config']['storage']['database'] = 0
 default['tyk']['gateway']['config']['storage']['optimisation_max_idle'] = 500
 default['tyk']['gateway']['config']['storage']['optimisation_max_active'] = 800
 default['tyk']['gateway']['config']['enable_analytics'] = false
-default['tyk']['gateway']['config']['enable_detailed_recording'] = false
-default['tyk']['gateway']['config']['enable_geo_ip'] = false
+default['tyk']['gateway']['config']['analytics_config']['enable_detailed_recording'] = false
+default['tyk']['gateway']['config']['analytics_config']['enable_geo_ip'] = false
 default['tyk']['gateway']['config']['analytics_config']['ignored_ips'] = []
 default['tyk']['gateway']['config']['health_check']
 default['tyk']['gateway']['config']['health_check']['enable_health_checks'] = true
